@@ -1,76 +1,44 @@
-looker.plugins.visualizations.add({
-  // Id and Label are legacy properties that no longer have any function besides documenting
-  // what the visualization used to have. The properties are now set via the manifest
-  // form within the admin/visualizations page of Looker
-  id: "test_uservoice",
-  label: "Test UserVoice",
+/**
+ * Welcome to the Looker Visualization Builder! Please refer to the following resources 
+ * to help you write your visualization:
+ *  - API Documentation - https://github.com/looker/custom_visualizations_v2/blob/master/docs/api_reference.md
+ *  - Example Visualizations - https://github.com/looker/custom_visualizations_v2/tree/master/src/examples
+ **/
+
+const visObject = {
+ /**
+  * Configuration options for your visualization. In Looker, these show up in the vis editor
+  * panel but here, you can just manually set your default values in the code.
+  **/
   options: {
-    font_size: {
-      type: "string",
-      label: "Font Size",
-      values: [
-        {"Large": "large"},
-        {"Small": "small"}
-      ],
-      display: "radio",
-      default: "large"
+    first_option: {
+    	type: "string",
+      label: "My First Option",
+      default: "Default Value"
+    },
+    second_option: {
+    	type: "number",
+      label: "My Second Option",
+      default: 42
     }
   },
-  // Set up the initial state of the visualization
-  create: function(element, config) {
+ 
+ /**
+  * The create function gets called when the visualization is mounted but before any
+  * data is passed to it.
+  **/
+	create: function(element, config){
+		element.innerHTML = "<h1>Ready to render!</h1>";
+	},
 
-    // Insert a <style> tag with some styles we'll use later.
-    element.innerHTML = `
-      <style>
-        .hello-world-vis {
-          /* Vertical centering */
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          text-align: center;
-        }
-        .hello-world-text-large {
-          font-size: 72px;
-        }
-        .hello-world-text-small {
-          font-size: 18px;
-        }
-      </style>`;
+ /**
+  * UpdateAsync is the function that gets called (potentially) multiple times. It receives
+  * the data and should update the visualization with the new data.
+  **/
+	updateAsync: function(data, element, config, queryResponse, details, doneRendering){
+    // set the dimensions and margins of the graph
 
-    // Create a container element to let us center the text.
-    var container = element.appendChild(document.createElement("div"));
-    container.className = "hello-world-vis";
-
-    // Create an element to contain the text.
-    this._textElement = container.appendChild(document.createElement("div"));
-
-  },
-  // Render in response to the data or settings changing
-  updateAsync: function(data, element, config, queryResponse, details, done) {
-    this.clearErrors();
-	
-    if (queryResponse.fields.dimensions.length == 0) {
-      this.addError({title: "No Dimensions", message: "This chart requires dimensions."});
-      return;
-    }
-
-    // Grab the first cell of the data
-    var firstRow = data[0];
-    var firstCell = firstRow[queryResponse.fields.dimensions[0].name];
-
-    // Insert the data into the page
-    this._textElement.innerHTML = LookerCharts.Utils.htmlForCell(firstCell);
-
-    // Set the size to the user-selected size
-    if (config.font_size == "small") {
-      this._textElement.className = "hello-world-text-small";
-    } else {
-      this._textElement.className = "hello-world-text-large";
-    }
-	  
     UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//autodeskbuildinsights.uservoice.com/widget_environment/Id7CEezkk2ryuCR2MPmg.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
-
     UserVoice.push(['set', {
       accent_color: '#2B78C5',
       trigger_color: 'white',
@@ -81,7 +49,8 @@ looker.plugins.visualizations.add({
     UserVoice.push(['addTrigger', {mode: 'feedback', trigger_position: 'bottom-right' }]);
     //UserVoice.push(['addTrigger', '#id', { mode: 'feedback' }]);
     UserVoice.push(['autoprompt', {}]);
-	  
-    done()
-  }
-});
+		doneRendering()
+	}
+};
+
+looker.plugins.visualizations.add(visObject);
