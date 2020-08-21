@@ -38,6 +38,36 @@ looker.plugins.visualizations.add({
         }
       </style>`;
 
+    // Create a container element to let us center the text.
+    var container = element.appendChild(document.createElement("div"));
+    container.className = "hello-world-vis";
+
+    // Create an element to contain the text.
+    this._textElement = container.appendChild(document.createElement("div"));
+
+  },
+  // Render in response to the data or settings changing
+  updateAsync: function(data, element, config, queryResponse, details, done) {
+    this.clearErrors();
+	
+    if (queryResponse.fields.dimensions.length == 0) {
+      this.addError({title: "No Dimensions", message: "This chart requires dimensions."});
+      return;
+    }
+
+    // Grab the first cell of the data
+    var firstRow = data[0];
+    var firstCell = firstRow[queryResponse.fields.dimensions[0].name];
+
+    // Insert the data into the page
+    this._textElement.innerHTML = LookerCharts.Utils.htmlForCell(firstCell);
+
+    // Set the size to the user-selected size
+    if (config.font_size == "small") {
+      this._textElement.className = "hello-world-text-small";
+    } else {
+      this._textElement.className = "hello-world-text-large";
+    }
 	  
     UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//autodeskbuildinsights.uservoice.com/widget_environment/Id7CEezkk2ryuCR2MPmg.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
 
@@ -52,17 +82,6 @@ looker.plugins.visualizations.add({
     //UserVoice.push(['addTrigger', '#id', { mode: 'feedback' }]);
     UserVoice.push(['autoprompt', {}]);
 	  
-    // Create a container element to let us center the text.
-    var container = element.appendChild(document.createElement("div"));
-    container.className = "hello-world-vis";
-
-    // Create an element to contain the text.
-    this._textElement = container.appendChild(document.createElement("div"));
-
-  },
-  // Render in response to the data or settings changing
-  updateAsync: function(data, element, config, queryResponse, details, done) {
-    this.clearErrors();
     done()
   }
 });
