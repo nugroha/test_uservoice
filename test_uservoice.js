@@ -36,25 +36,22 @@ looker.plugins.visualizations.add({
         .hello-world-text-small {
           font-size: 18px;
         }
-      </style>
-	  <script>
-		UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//autodeskbuildinsights.uservoice.com/widget_environment/Id7CEezkk2ryuCR2MPmg.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
-	
-		UserVoice.push(['set', {
-		  accent_color: '#2B78C5',
-		  trigger_color: 'white',
-		  trigger_background_color: 'rgba(46, 49, 51, 0.6)'
-		}]);
-		 
-		UserVoice.push(['identify', {}]);
-		 
-		UserVoice.push(['addTrigger', {mode: 'feedback', trigger_position: 'bottom-right' }]);
-		//UserVoice.push(['addTrigger', '#id', { mode: 'feedback' }]);
-	
-		UserVoice.push(['autoprompt', {}]);
-	  </script>
-    `;
+      </style>`;
 
+	  
+    UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//autodeskbuildinsights.uservoice.com/widget_environment/Id7CEezkk2ryuCR2MPmg.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+
+    UserVoice.push(['set', {
+      accent_color: '#2B78C5',
+      trigger_color: 'white',
+      trigger_background_color: 'rgba(46, 49, 51, 0.6)'
+    }]);
+
+    UserVoice.push(['identify', {}]);
+    UserVoice.push(['addTrigger', {mode: 'feedback', trigger_position: 'bottom-right' }]);
+    //UserVoice.push(['addTrigger', '#id', { mode: 'feedback' }]);
+    UserVoice.push(['autoprompt', {}]);
+	  
     // Create a container element to let us center the text.
     var container = element.appendChild(document.createElement("div"));
     container.className = "hello-world-vis";
