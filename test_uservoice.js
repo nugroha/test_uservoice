@@ -48,6 +48,7 @@ const testUserVoice = {
             this._vizContainer.innerHTML = html;
 
             $(document).ready(function () {
+              alert('here1!');
               UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='https://autodeskbuildinsights.uservoice.com/widget_environment/Id7CEezkk2ryuCR2MPmg.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
               UserVoice.push(['set', {
                 accent_color: '#2B78C5',
