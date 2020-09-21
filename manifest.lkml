@@ -12,6 +12,6 @@ constant: VIS_ID {
 
 visualization: {
   id: "@{VIS_ID}"
-  url: "https://github.com/nugroha/test_uservoice/blob/master/test_uservoice.js"
+  url: "https://test-uservoice.s3-us-west-2.amazonaws.com/test_uservoice.js"
   label: "@{VIS_LABEL}"
 }
